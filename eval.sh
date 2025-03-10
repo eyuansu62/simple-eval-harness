@@ -1,0 +1,2 @@
+# python eval.py --dataset "all" --model-name "/home/qinbowen/OpenRLHF/examples/scripts/checkpoint/Qwen2.5-Math-7B-sft-think-5e5-4k" --max-tokens 4096 --tensor-parallel-size 1 --data-parallel-size 8 --backend vllm
+python eval.py --dataset aime24 --model-name "/share/project/huggingface/models/QwQ-32B" --max-tokens 30000 --tensor-parallel-size 1 --data-parallel-size 8 --backend api
