@@ -38,8 +38,14 @@ eval_logger = logging.getLogger("lm-eval")
 
 
 ### SQLite-based caching of LM responses
-def hash_args(attr, req, conversation_id):
-    dat = json.dumps([attr] + req + [conversation_id])
+def hash_args(attr, req, conversation_id=None):
+    """Generate hash for both single-turn and multi-turn requests"""
+    if conversation_id is not None:
+        # Multi-turn case
+        dat = json.dumps([attr] + req + [conversation_id])
+    else:
+        # Single-turn case
+        dat = json.dumps([attr] + req)
     return hashlib.sha256(dat.encode("utf-8")).hexdigest()
 
 
@@ -48,10 +54,9 @@ class CacheHook:
         if cachinglm is None:
             self.cache = None
             return
-
         self.cache = cachinglm.cache
 
-    def add_partial(self, attr, req, res, conversation_id) -> None:
+    def add_partial(self, attr, req, res, conversation_id=None) -> None:
         if self.cache is None:
             return
         hsh = hash_args(attr, req, conversation_id)
@@ -81,40 +86,52 @@ class CachingLM:
         def fn(requests, gen_kwargs):
             res = []
             remaining_reqs = []
-            # Figure out which requests are cached and which are new
-            eval_logger.info(
-                f"Loading '{attr}' responses from cache '{self.cache_json}' where possible..."
-            )
+            
+            eval_logger.info(f"Loading '{attr}' responses from cache where possible...")
             for req in tqdm(requests, desc="Checking cached requests"):
-                hsh = hash_args(attr, req[1], req[0])
+                if isinstance(req, tuple):
+                    # Multi-turn case
+                    conversation_id, req_content = req
+                    hsh = hash_args(attr, req_content, conversation_id)
+                else:
+                    # Single-turn case
+                    hsh = hash_args(attr, req)
+                    conversation_id, req_content = None, req
+
                 if hsh in self.cache:
                     ob = self.cache[hsh]
                     assert ob is not None
                     res.append(ob)
                 else:
                     res.append(None)
-                    remaining_reqs.append(req)
+                    remaining_reqs.append((conversation_id, req_content) if conversation_id else req_content)
+
             eval_logger.info(
                 f"Cached requests: {len(requests) - len(remaining_reqs)}, Requests remaining: {len(remaining_reqs)}"
             )
+
             if remaining_reqs:
-                # Run the LM on requests that aren't cached
                 rem_res = getattr(self.lm, attr)(remaining_reqs, gen_kwargs=gen_kwargs)
             else:
                 rem_res = []
 
-            # Integrate new results into the response list and update the cache
+            # Integrate new results
             resptr = 0
             for req, r in zip(remaining_reqs, rem_res):
                 while res[resptr] is not None:
                     resptr += 1
                 res[resptr] = r
-                # Cache the new result
-                hsh = hash_args(attr, req[1], req[0])
+                
+                if isinstance(req, tuple):
+                    # Multi-turn case
+                    conversation_id, req_content = req
+                    hsh = hash_args(attr, req_content, conversation_id)
+                else:
+                    # Single-turn case
+                    hsh = hash_args(attr, req)
                 self.cache[hsh] = r
 
             self.cache.commit()
-
             return res
 
         return fn
@@ -174,15 +191,6 @@ class TemplateAPI:
         if not isinstance(stop, (list, tuple)):
             stop = [stop]
 
-        # Model-specific message adjustment
-        if "gemma" in (self.model or "").lower():
-            # For gemma-like models, prepend system message to next message
-            if messages and messages[0]['role'] == "system":
-                system_message = messages[0]['content']
-                if len(messages) > 1:
-                    messages[1]['content'] = system_message + messages[1]['content']
-                messages = messages[1:]
-
         if isinstance(messages, str):
             key = "prompt"
         else:
@@ -196,26 +204,17 @@ class TemplateAPI:
         }
         # print(payload)
 
-        # Handle sense vs. default model variants
-        if "sense" in (self.model or "").lower():
-            payload.update({
-                "max_tokens": max_tokens,
-                "temperature": 0.01,
-            })
-        elif "minicpm" in self.model:
-            payload.pop("do_sample")
-        elif "o1" in (self.model or "").lower():
+       
+        if "o1" in (self.model or "").lower():
             payload.update({
                 "max_completion_tokens": 20000
             })
+        elif self.model.startswith("ep-20"):
+            payload.update({
+                "max_tokens": 12288
+            })
         elif "claude-3-7-sonnet-20250219#thinking" in (self.model or "").lower():
             payload.pop("seed")
-        elif "ernie" in (self.model or "").lower():
-            payload.update({
-                "max_tokens": max_tokens,
-                "temperature": 0.01,
-            })
-            # No explicit stop tokens for 'sense' variant by design
         else:
             if not gen_kwargs.pop("seed", None): payload.pop("seed")
             payload.update({
@@ -279,7 +278,7 @@ class TemplateAPI:
             # print(response.text)
             if not response.ok:
                 eval_logger.warning(f"API request failed: {response.text}")
-                filtered = self._handle_inappropriate_content(response.text)
+                filtered = self._handle_inappropriate_content(str(response.text))
                 if filtered:
                     return filtered
 
@@ -310,7 +309,7 @@ class TemplateAPI:
                 if not response.ok:
                     error_text = await response.text()
                     eval_logger.warning(f"API request failed: {error_text}")
-                    filtered = self._handle_inappropriate_content(error_text)
+                    filtered = self._handle_inappropriate_content(str(error_text))
                     outputs = filtered if filtered else None
                     if not outputs:
                         response.raise_for_status()

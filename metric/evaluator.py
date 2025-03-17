@@ -53,7 +53,7 @@ class DatasetEvaluator:
         result_boxed = self.process_prediction(prediction)
 
         if not result_boxed:
-            print(f"[debug] result_boxed is empty; prediction={prediction}")
+            # print(f"[debug] result_boxed is empty; prediction={prediction}")
             return 0
         
         extracted_result = parse(f"${result_boxed}$")

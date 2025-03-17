@@ -1,194 +1,187 @@
 {
-    "dataset": "all",
-    "model": "/home/qinbowen/OpenRLHF/examples/scripts/checkpoint/OLMo-2-1124-7B-sft",
-    "results": {
-        "aime24": {
-            "accuracy": 0.0,
-            "correct": 0,
-            "total": 30
-        },
-        "amc23": {
-            "accuracy": 0.0,
-            "correct": 0,
-            "total": 40
-        }
-    }
-}
-{
-    "dataset": "all",
-    "model": "/home/qinbowen/OpenRLHF/examples/scripts/checkpoint/OLMo-2-1124-7B-sft",
-    "results": {
-        "aime24": {
-            "accuracy": 0.0,
-            "correct": 0,
-            "total": 30
-        },
-        "amc23": {
-            "accuracy": 0.075,
-            "correct": 3,
-            "total": 40
-        }
-    }
-}
-{
-    "dataset": "all",
-    "model": "/home/qinbowen/OpenRLHF/examples/scripts/checkpoint/OLMo-2-1124-7B-sft-think",
-    "results": {
-        "aime24": {
-            "accuracy": 0.0,
-            "correct": 0,
-            "total": 30
-        },
-        "amc23": {
-            "accuracy": 0.075,
-            "correct": 3,
-            "total": 40
-        }
-    }
-}
-{
-    "dataset": "all",
-    "model": "/home/qinbowen/OpenRLHF/examples/scripts/checkpoint/OLMo-2-1124-7B-sft-think-5e5",
-    "results": {
-        "aime24": {
-            "accuracy": 0.0,
-            "correct": 0,
-            "total": 30
-        },
-        "amc23": {
-            "accuracy": 0.175,
-            "correct": 7,
-            "total": 40
-        }
-    }
-}
-{
-    "dataset": "all",
-    "model": "/home/qinbowen/OpenRLHF/examples/scripts/checkpoint/OLMo-2-1124-7B-sft-think-5e5",
-    "results": {
-        "aime24": {
-            "accuracy": 0.0,
-            "correct": 0,
-            "total": 30
-        },
-        "amc23": {
-            "accuracy": 0.175,
-            "correct": 7,
-            "total": 40
-        }
-    }
-}
-{
-    "dataset": "all",
-    "model": "/home/qinbowen/OpenRLHF/examples/scripts/checkpoint/OLMo-2-1124-7B-sft-think-5e5",
-    "results": {
-        "aime24": {
-            "accuracy": 0.0,
-            "correct": 0,
-            "total": 30
-        },
-        "amc23": {
-            "accuracy": 0.125,
-            "correct": 5,
-            "total": 40
-        }
-    }
-}
-{
-    "dataset": "all",
-    "model": "/home/qinbowen/OpenRLHF/examples/scripts/checkpoint/OLMo-2-1124-7B-sft-think",
-    "results": {
-        "aime24": {
-            "accuracy": 0.0,
-            "correct": 0,
-            "total": 30
-        },
-        "amc23": {
-            "accuracy": 0.075,
-            "correct": 3,
-            "total": 40
-        }
-    }
-}
-{
-    "dataset": "all",
-    "model": "/home/qinbowen/OpenRLHF/examples/scripts/checkpoint/OLMo-2-1124-7B-sft-think-5e5-4k",
-    "results": {
-        "aime24": {
-            "accuracy": 0.0,
-            "correct": 0,
-            "total": 30
-        },
-        "amc23": {
-            "accuracy": 0.125,
-            "correct": 5,
-            "total": 40
-        }
-    }
-}
-{
-    "dataset": "all",
-    "model": "/home/qinbowen/OpenRLHF/examples/scripts/checkpoint/OLMo-2-1124-7B-sft-think-5e5-4k",
-    "results": {
-        "aime24": {
-            "accuracy": 0.0,
-            "correct": 0,
-            "total": 30
-        },
-        "amc23": {
-            "accuracy": 0.125,
-            "correct": 5,
-            "total": 40
-        }
-    },
-    "max_tokens": 8192,
-    "temperature": 0.7,
-    "top_p": 1.0
-}
-{
-    "dataset": "all",
-    "model": "/share/project/huggingface/models/Qwen2.5-Math-7B",
-    "results": {
-        "aime24": {
-            "accuracy": 0.16666666666666666,
-            "correct": 5,
-            "total": 30
-        },
-        "amc23": {
-            "accuracy": 0.4,
-            "correct": 16,
-            "total": 40
-        }
-    },
-    "max_tokens": 8192,
-    "temperature": 0.7,
-    "top_p": 1.0
-}
-{
-    "dataset": "aime24",
+    "dataset": "aime25",
     "model": "/share/project/huggingface/models/QwQ-32B",
     "results": {
-        "aime24": {
+        "aime25": {
+            "accuracy": 0.6333333333333333,
+            "correct": 19,
+            "total": 30
+        }
+    },
+    "max_tokens": 30000,
+    "temperature": 0.6,
+    "top_p": 1.0,
+    "repetition_penalty": 1.0,
+    "chat": true,
+    "timestamp": 1741688588.443697
+}
+{
+    "dataset": "aime25",
+    "model": "/share/project/huggingface/models/QwQ-32B",
+    "results": {
+        "aime25": {
             "accuracy": 0.7666666666666667,
             "correct": 23,
             "total": 30
         }
     },
-    "max_tokens": 20000,
+    "max_tokens": 30000,
     "temperature": 0.7,
-    "top_p": 1.0
+    "top_p": 1.0,
+    "repetition_penalty": 1.0,
+    "chat": true,
+    "timestamp": 1741694958.9872053
 }
 {
-    "dataset": "aime24",
+    "dataset": "aime25",
     "model": "/share/project/huggingface/models/QwQ-32B",
     "results": {
-        "aime24": {
-            "accuracy": 0.8,
-            "correct": 24,
+        "aime25": {
+            "accuracy": 0.3333333333333333,
+            "correct": 10,
             "total": 30
         }
     },
     "max_tokens": 30000,
-    "temperature": 0.7,
-    "top_p": 1.0
+    "temperature": 0.6,
+    "top_p": 1.0,
+    "repetition_penalty": 1.0,
+    "chat": false,
+    "timestamp": 1741700272.7542782
+}
+{
+    "dataset": "aime24",
+    "model": "/share/project/huggingface/models/Qwen2.5-32B-Instruct",
+    "results": {
+        "aime24": {
+            "accuracy": 0.16666666666666666,
+            "correct": 5,
+            "total": 30
+        }
+    },
+    "max_tokens": 30000,
+    "temperature": 0.6,
+    "top_p": 1.0,
+    "repetition_penalty": 1.0,
+    "chat": true,
+    "timestamp": 1741747384.5696576
+}
+{
+    "dataset": "aime25",
+    "model": "/share/project/huggingface/models/Qwen2.5-32B-Instruct",
+    "results": {
+        "aime25": {
+            "accuracy": 0.13333333333333333,
+            "correct": 4,
+            "total": 30
+        }
+    },
+    "max_tokens": 30000,
+    "temperature": 0.6,
+    "top_p": 1.0,
+    "repetition_penalty": 1.0,
+    "chat": true,
+    "timestamp": 1741748769.695464
+}
+{
+    "dataset": "aime25",
+    "model": "/share/project/huggingface/models/Qwen2.5-32B-Instruct",
+    "results": {
+        "aime25": {
+            "accuracy": 0.16666666666666666,
+            "correct": 5,
+            "total": 30
+        }
+    },
+    "max_tokens": 30000,
+    "temperature": 1.0,
+    "top_p": 1.0,
+    "repetition_penalty": 1.0,
+    "chat": true,
+    "timestamp": 1741749047.6179361
+}
+{
+    "dataset": "aime25",
+    "model": "/share/project/huggingface/models/Qwen2.5-32B-Instruct",
+    "results": {
+        "aime25": {
+            "accuracy": 0.07369744058500914,
+            "correct": 645,
+            "total": 8752
+        }
+    },
+    "max_tokens": 30000,
+    "temperature": 1.0,
+    "top_p": 1.0,
+    "repetition_penalty": 1.0,
+    "use_chat_completions": true,
+    "timestamp": 1741784906.8332305
+}
+{
+    "dataset": "/home/qinbowen/OpenRLHF/eval/eval_output/processed_QwQ-32B_30000_True_aime25.jsonl",
+    "model": "/share/project/huggingface/models/Qwen2.5-32B-Instruct",
+    "results": {
+        "aime25": {
+            "accuracy": 0.273308957952468,
+            "correct": 2392,
+            "total": 8752
+        }
+    },
+    "max_tokens": 20000,
+    "temperature": 1.0,
+    "top_p": 1.0,
+    "repetition_penalty": 1.0,
+    "use_chat_completions": true,
+    "timestamp": 1741857535.9915102
+}
+{
+    "dataset": "omni-math",
+    "model": "ep-20250123001618-2sk2j",
+    "results": {
+        "omni-math": {
+            "accuracy": 0.0,
+            "correct": 0,
+            "total": 4428
+        }
+    },
+    "max_tokens": 20000,
+    "temperature": 0.6,
+    "top_p": 1.0,
+    "repetition_penalty": 1.0,
+    "use_chat_completions": true,
+    "timestamp": 1741861170.8017867
+}
+{
+    "dataset": "/home/qinbowen/OpenRLHF/eval/eval_output/processed_QwQ-32B_30000_True_aime25.jsonl",
+    "model": "/share/project/huggingface/models/Qwen2.5-32B-Instruct",
+    "results": {
+        "aime25": {
+            "accuracy": 0.074154478976234,
+            "correct": 649,
+            "total": 8752
+        }
+    },
+    "max_tokens": 20000,
+    "temperature": 1.0,
+    "top_p": 1.0,
+    "repetition_penalty": 1.0,
+    "use_chat_completions": true,
+    "timestamp": 1741863353.8013678
+}
+{
+    "dataset": "omni-math",
+    "model": "ep-20250123001618-2sk2j",
+    "results": {
+        "omni-math": {
+            "accuracy": 0.3742095754290876,
+            "correct": 1657,
+            "total": 4428
+        }
+    },
+    "max_tokens": 20000,
+    "temperature": 0.6,
+    "top_p": 1.0,
+    "repetition_penalty": 1.0,
+    "use_chat_completions": true,
+    "timestamp": 1741875117.2045524
 }
