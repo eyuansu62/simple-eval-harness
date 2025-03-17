@@ -141,8 +141,10 @@ docs/.build
 
 *API_tokens.json
 *.txt
-eval_*
+eval.sh
+eval_results.json
 *.sh
+
 # pytorch checkpoint
 *.pt
 *.log

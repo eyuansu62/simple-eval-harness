@@ -21,4 +21,4 @@ requires-python = ">=3.10"
 packages = ["simple_eval_harness"]
 
 [project.scripts]
-simple-eval = "simple_eval_harness.eval:main"
+simple_eval = "simple_eval_harness.eval:main"

@@ -7,10 +7,10 @@ import argparse
 
 from pathlib import Path
 from datasets import load_dataset
-from metric import AIMEEvaluator, OminiMathEvaluator, UgPhysicsEvaluator
+from simple_eval_harness.metric import AIMEEvaluator, OminiMathEvaluator, UgPhysicsEvaluator
 from tqdm import tqdm
-from template_api import CachingLM, TemplateAPI
-from token_soup import get_token
+from simple_eval_harness.template_api import CachingLM, TemplateAPI
+from simple_eval_harness.utils.token_soup import get_token
 
 try:
     from vllm import LLM, SamplingParams
@@ -251,9 +251,11 @@ def process_jsonl_file(dataset, args):
     # Process prompts
     tokenizer = llm.get_tokenizer() if args.backend != "api" else None
     prompt_template = args.prompt_template if args.backend != "api" else None
-    problem_key = get_problem_key(dataset)
-    prompts = [promptify(sample[problem_key], prompt_template, tokenizer, use_chat_completions=args.use_chat_completions, use_system_prompt=args.use_system_prompt) for sample in dataset]
+    prompts = [promptify(sample["question"], prompt_template, tokenizer, use_chat_completions=args.use_chat_completions, use_system_prompt=args.use_system_prompt) for sample in dataset]
 
+    if args.debug:
+        prompts = prompts[:10]
+        
     # Run inference using a unified function call
     start_time = time.time()
     if args.backend != "api":
@@ -295,7 +297,7 @@ def load_task_dataset(task_name):
         for item in items:
             for key in ['problem', 'question', 'query']:
                 if key in item:
-                    item['problem'] = item.pop(key)
+                    item['question'] = item.pop(key)
                     break
             for key in ['answer', 'answers']:
                 if key in item:
@@ -396,7 +398,7 @@ def analyze_results(data, llm_as_judge=False, answer_key='answer'):
         
         # Dataset-level analysis
         # Use evaluator's analyze_results if available, otherwise use calculate_accuracy_stats
-        if evaluator.get_name() == "ominimath":
+        if hasattr(evaluator, 'analyze_results'):
             task_results[task] = evaluator.analyze_results(samples)
         else:
             task_stats = {
@@ -458,6 +460,7 @@ def main():
     parser.add_argument("--split", default="test", help="Split to use (if dataset has multiple splits).")
     parser.add_argument("--model-name", required=True, help="Name of the model to use for inference.")
     parser.add_argument("--answer-key", default="answer", help="Key for the answer/ground truth in the dataset.")
+    parser.add_argument("--debug", action="store_true", help="Enable debug mode.")
     parser.add_argument("--max-tokens", type=int, default=8192, help="Max tokens for generation (default: 8192)")
     parser.add_argument("--temperature", type=float, default=0.6, help="Temperature for sampling (default: 0.6)")
     parser.add_argument("--top-p", type=float, default=1.0, help="Top-p for nucleus sampling (default: 1.0)")
@@ -473,7 +476,7 @@ def main():
     parser.add_argument("--use-cache", action="store_true", help="Whether to use cache for inference")
     parser.add_argument("--use-chat-completions", type=bool, default=True, help="Use chat completions mode for API models.")
     parser.add_argument("--use-system-prompt", type=bool, default=True, help="Whether to use the system prompt.")
-    parser.add_argument("--llm-as-judge", type=bool, default=False, help="Whether to use the LLM as judge.")
+    parser.add_argument("--llm-as-judge", action="store_true", default=False, help="Whether to use the LLM as judge.")
     parser.add_argument("--load-debug-dataset", type=str, help="Load the dataset for debugging")
     parser.add_argument("--delimiter", type=str, default=". ")
 
