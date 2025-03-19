@@ -135,23 +135,6 @@
     "timestamp": 1741857535.9915102
 }
 {
-    "dataset": "omni-math",
-    "model": "ep-20250123001618-2sk2j",
-    "results": {
-        "omni-math": {
-            "accuracy": 0.0,
-            "correct": 0,
-            "total": 4428
-        }
-    },
-    "max_tokens": 20000,
-    "temperature": 0.6,
-    "top_p": 1.0,
-    "repetition_penalty": 1.0,
-    "use_chat_completions": true,
-    "timestamp": 1741861170.8017867
-}
-{
     "dataset": "/home/qinbowen/OpenRLHF/eval/eval_output/processed_QwQ-32B_30000_True_aime25.jsonl",
     "model": "/share/project/huggingface/models/Qwen2.5-32B-Instruct",
     "results": {
@@ -184,4 +167,995 @@
     "repetition_penalty": 1.0,
     "use_chat_completions": true,
     "timestamp": 1741875117.2045524
+}
+{
+    "dataset": "omni-math",
+    "model": "ep-20250123001618-2sk2j",
+    "results": {
+        "omni-math": {
+            "accuracy": 0.3150406504065041,
+            "correct": 1395,
+            "total": 4428,
+            "Mathematics -> Algebra -> Other": {
+                "accuracy": 0.3181818181818182,
+                "correct": 14,
+                "total": 44
+            },
+            "Mathematics -> Geometry -> Plane Geometry -> Triangulations": {
+                "accuracy": 0.225,
+                "correct": 63,
+                "total": 280
+            },
+            "Mathematics -> Discrete Mathematics -> Graph Theory": {
+                "accuracy": 0.11475409836065574,
+                "correct": 7,
+                "total": 61
+            },
+            "Mathematics -> Algebra -> Algebra -> Polynomial Operations": {
+                "accuracy": 0.25,
+                "correct": 69,
+                "total": 276
+            },
+            "Mathematics -> Algebra -> Abstract Algebra -> Group Theory": {
+                "accuracy": 0.3076923076923077,
+                "correct": 20,
+                "total": 65
+            },
+            "Mathematics -> Discrete Mathematics -> Algorithms": {
+                "accuracy": 0.2535211267605634,
+                "correct": 18,
+                "total": 71
+            },
+            "Mathematics -> Geometry -> Plane Geometry -> Polygons": {
+                "accuracy": 0.20860927152317882,
+                "correct": 63,
+                "total": 302
+            },
+            "Mathematics -> Geometry -> Plane Geometry -> Other": {
+                "accuracy": 0.225,
+                "correct": 9,
+                "total": 40
+            },
+            "Mathematics -> Discrete Mathematics -> Combinatorics": {
+                "accuracy": 0.17563739376770537,
+                "correct": 124,
+                "total": 706
+            },
+            "Mathematics -> Number Theory -> Other": {
+                "accuracy": 0.2608695652173913,
+                "correct": 36,
+                "total": 138
+            },
+            "Mathematics -> Number Theory -> Greatest Common Divisors (GCD)": {
+                "accuracy": 0.2708333333333333,
+                "correct": 13,
+                "total": 48
+            },
+            "Mathematics -> Precalculus -> Trigonometric Functions": {
+                "accuracy": 0.34,
+                "correct": 17,
+                "total": 50
+            },
+            "Mathematics -> Applied Mathematics -> Statistics -> Probability -> Counting Methods -> Combinations": {
+                "accuracy": 0.28823529411764703,
+                "correct": 98,
+                "total": 340
+            },
+            "Mathematics -> Applied Mathematics -> Probability -> Other": {
+                "accuracy": 0.22807017543859648,
+                "correct": 13,
+                "total": 57
+            },
+            "Mathematics -> Geometry -> Plane Geometry -> Triangles -> Other": {
+                "accuracy": 0.17647058823529413,
+                "correct": 3,
+                "total": 17
+            },
+            "Mathematics -> Geometry -> Plane Geometry -> Angles": {
+                "accuracy": 0.29770992366412213,
+                "correct": 39,
+                "total": 131
+            },
+            "Mathematics -> Algebra -> Intermediate Algebra -> Inequalities": {
+                "accuracy": 0.3,
+                "correct": 12,
+                "total": 40
+            },
+            "Mathematics -> Number Theory -> Congruences": {
+                "accuracy": 0.2328767123287671,
+                "correct": 51,
+                "total": 219
+            },
+            "Mathematics -> Algebra -> Intermediate Algebra -> Complex Numbers": {
+                "accuracy": 0.3064516129032258,
+                "correct": 19,
+                "total": 62
+            },
+            "Mathematics -> Discrete Mathematics -> Logic": {
+                "accuracy": 0.3,
+                "correct": 12,
+                "total": 40
+            },
+            "Mathematics -> Algebra -> Algebra -> Equations and Inequalities": {
+                "accuracy": 0.34360189573459715,
+                "correct": 145,
+                "total": 422
+            },
+            "Mathematics -> Number Theory -> Prime Numbers": {
+                "accuracy": 0.3155737704918033,
+                "correct": 77,
+                "total": 244
+            },
+            "Mathematics -> Number Theory -> Divisibility -> Other": {
+                "accuracy": 0.17647058823529413,
+                "correct": 3,
+                "total": 17
+            },
+            "Mathematics -> Algebra -> Prealgebra -> Integers": {
+                "accuracy": 0.41919191919191917,
+                "correct": 83,
+                "total": 198
+            },
+            "Mathematics -> Algebra -> Abstract Algebra -> Ring Theory": {
+                "accuracy": 0.07692307692307693,
+                "correct": 1,
+                "total": 13
+            },
+            "Mathematics -> Number Theory -> Factorization": {
+                "accuracy": 0.2828282828282828,
+                "correct": 56,
+                "total": 198
+            },
+            "Mathematics -> Algebra -> Algebra -> Algebraic Expressions": {
+                "accuracy": 0.3333333333333333,
+                "correct": 56,
+                "total": 168
+            },
+            "Mathematics -> Algebra -> Linear Algebra -> Matrices": {
+                "accuracy": 0.2608695652173913,
+                "correct": 6,
+                "total": 23
+            },
+            "Mathematics -> Algebra -> Other (Matrix-related optimization) -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Geometry -> Solid Geometry -> 3D Shapes": {
+                "accuracy": 0.31868131868131866,
+                "correct": 29,
+                "total": 91
+            },
+            "Mathematics -> Precalculus -> Limits": {
+                "accuracy": 0.14285714285714285,
+                "correct": 1,
+                "total": 7
+            },
+            "Mathematics -> Calculus -> Differential Calculus -> Applications of Derivatives": {
+                "accuracy": 0.35714285714285715,
+                "correct": 15,
+                "total": 42
+            },
+            "Mathematics -> Algebra -> Intermediate Algebra -> Permutations and Combinations -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Applied Mathematics -> Statistics -> Probability -> Counting Methods -> Other": {
+                "accuracy": 0.26229508196721313,
+                "correct": 16,
+                "total": 61
+            },
+            "Mathematics -> Algebra -> Abstract Algebra -> Field Theory": {
+                "accuracy": 0.3050847457627119,
+                "correct": 18,
+                "total": 59
+            },
+            "Mathematics -> Algebra -> Intermediate Algebra -> Exponential Functions": {
+                "accuracy": 0.39705882352941174,
+                "correct": 27,
+                "total": 68
+            },
+            "Mathematics -> Algebra -> Intermediate Algebra -> Other": {
+                "accuracy": 0.3067484662576687,
+                "correct": 50,
+                "total": 163
+            },
+            "Mathematics -> Precalculus -> Functions": {
+                "accuracy": 0.43333333333333335,
+                "correct": 13,
+                "total": 30
+            },
+            "Mathematics -> Algebra -> Abstract Algebra -> Functional Equations -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Abstract Algebra -> Other": {
+                "accuracy": 0.4647887323943662,
+                "correct": 33,
+                "total": 71
+            },
+            "Mathematics -> Algebra -> Linear Algebra -> Linear Transformations": {
+                "accuracy": 0.5,
+                "correct": 2,
+                "total": 4
+            },
+            "Mathematics -> Geometry -> Plane Geometry -> Area": {
+                "accuracy": 0.22448979591836735,
+                "correct": 11,
+                "total": 49
+            },
+            "Mathematics -> Geometry -> Plane Geometry -> Circles": {
+                "accuracy": 0.19402985074626866,
+                "correct": 13,
+                "total": 67
+            },
+            "Mathematics -> Algebra -> Intermediate Algebra -> Quadratic Functions": {
+                "accuracy": 0.5517241379310345,
+                "correct": 16,
+                "total": 29
+            },
+            "Mathematics -> Calculus -> Integral Calculus -> Techniques of Integration -> Single-variable": {
+                "accuracy": 0.15789473684210525,
+                "correct": 3,
+                "total": 19
+            },
+            "Mathematics -> Algebra -> Algebra -> Sequences and Series": {
+                "accuracy": 0.23076923076923078,
+                "correct": 6,
+                "total": 26
+            },
+            "Mathematics -> Number Theory -> Congruences (due to use of properties of roots of unity) -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Equations and Inequalities -> Other": {
+                "accuracy": 0.2857142857142857,
+                "correct": 6,
+                "total": 21
+            },
+            "Mathematics -> Applied Mathematics -> Statistics -> Probability -> Other": {
+                "accuracy": 0.2116788321167883,
+                "correct": 29,
+                "total": 137
+            },
+            "Mathematics -> Algebra -> Intermediate Algebra -> Functional Analysis": {
+                "accuracy": 0.25,
+                "correct": 1,
+                "total": 4
+            },
+            "Mathematics -> Algebra -> Sequences and Series -> Other": {
+                "accuracy": 0.375,
+                "correct": 3,
+                "total": 8
+            },
+            "Mathematics -> Discrete Mathematics -> Other": {
+                "accuracy": 0.75,
+                "correct": 3,
+                "total": 4
+            },
+            "Mathematics -> Algebra -> Intermediate Algebra -> Recursive Sequences -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Intermediate Algebra -> Sequences -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 6
+            },
+            "Mathematics -> Algebra -> Abstract Algebra -> Group Theory (related to permutations) -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Applied Mathematics -> Statistics -> Probability -> Counting Methods -> Permutations": {
+                "accuracy": 0.35714285714285715,
+                "correct": 5,
+                "total": 14
+            },
+            "Mathematics -> Number Theory -> Perfect Squares -> Other": {
+                "accuracy": 0.3333333333333333,
+                "correct": 1,
+                "total": 3
+            },
+            "Mathematics -> Algebra -> Prealgebra -> Other": {
+                "accuracy": 0.25,
+                "correct": 2,
+                "total": 8
+            },
+            "Mathematics -> Algebra -> Number Theory -> Other": {
+                "accuracy": 0.5,
+                "correct": 3,
+                "total": 6
+            },
+            "Mathematics -> Applied Mathematics -> Word Problems -> Other": {
+                "accuracy": 1.0,
+                "correct": 1,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Differential Equations -> Partial Differential Equations (PDEs)": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Discrete Mathematics -> Set Theory -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Prealgebra -> Fractions": {
+                "accuracy": 0.4745762711864407,
+                "correct": 28,
+                "total": 59
+            },
+            "Mathematics -> Calculus -> Differential Calculus -> Derivatives": {
+                "accuracy": 0.45454545454545453,
+                "correct": 5,
+                "total": 11
+            },
+            "Mathematics -> Algebra -> Combinatorics -> Other": {
+                "accuracy": 1.0,
+                "correct": 1,
+                "total": 1
+            },
+            "Mathematics -> Number Theory -> Quadratic Fields -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Calculus -> Techniques of Integration -> Other": {
+                "accuracy": 1.0,
+                "correct": 2,
+                "total": 2
+            },
+            "Mathematics -> Calculus -> Differential Calculus -> Series -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 2
+            },
+            "Mathematics -> Calculus -> Integral Calculus -> Applications of Integrals": {
+                "accuracy": 0.23809523809523808,
+                "correct": 5,
+                "total": 21
+            },
+            "Mathematics -> Calculus -> Differential Calculus -> Other": {
+                "accuracy": 0.5,
+                "correct": 1,
+                "total": 2
+            },
+            "Mathematics -> Algebra -> Abstract Algebra -> Other (Inequalities) -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Applied Mathematics -> Math Word Problems": {
+                "accuracy": 0.5248618784530387,
+                "correct": 95,
+                "total": 181
+            },
+            "Mathematics -> Number Theory -> Divisors -> Other": {
+                "accuracy": 0.2857142857142857,
+                "correct": 2,
+                "total": 7
+            },
+            "Mathematics -> Algebra -> Linear Algebra -> Vectors": {
+                "accuracy": 0.25,
+                "correct": 2,
+                "total": 8
+            },
+            "Mathematics -> Algebra -> Abstract Algebra -> Other (Recurrence Relations) -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Other (Number Theory - Divisibility) -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Prealgebra -> Simple Equations": {
+                "accuracy": 0.6104651162790697,
+                "correct": 105,
+                "total": 172
+            },
+            "Mathematics -> Calculus -> Integral Calculus -> Techniques of Integration -> Partial Fractions -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Intermediate Algebra -> Logarithmic Functions": {
+                "accuracy": 0.47619047619047616,
+                "correct": 10,
+                "total": 21
+            },
+            "Mathematics -> Calculus -> Integral Calculus -> Series -> Other": {
+                "accuracy": 0.6666666666666666,
+                "correct": 2,
+                "total": 3
+            },
+            "Mathematics -> Algebra -> Intermediate Algebra -> Series -> Other": {
+                "accuracy": 1.0,
+                "correct": 1,
+                "total": 1
+            },
+            "Mathematics -> Applied Mathematics -> Statistics -> Mathematical Statistics": {
+                "accuracy": 0.3333333333333333,
+                "correct": 4,
+                "total": 12
+            },
+            "Mathematics -> Number Theory -> Other (since the context of \\( A \\) is necessary but unspecified here, the question relates to determining and summing all divisors of an integer) -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Number Theory -> Least Common Multiples (LCM)": {
+                "accuracy": 0.16666666666666666,
+                "correct": 2,
+                "total": 12
+            },
+            "Mathematics -> Geometry -> Plane Geometry -> Curves -> Other": {
+                "accuracy": 0.5,
+                "correct": 2,
+                "total": 4
+            },
+            "Mathematics -> Algebra -> Exponents and Powers -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Geometry -> Plane Geometry -> Distance -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Algebraic Expressions -> Other": {
+                "accuracy": 0.16666666666666666,
+                "correct": 1,
+                "total": 6
+            },
+            "Mathematics -> Algebra -> Abstract Algebra -> Function Theory -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Geometry -> Solid Geometry -> Volume": {
+                "accuracy": 0.2,
+                "correct": 2,
+                "total": 10
+            },
+            "Mathematics -> Calculus -> Integral Calculus -> Techniques of Integration -> Multi-variable": {
+                "accuracy": 0.3,
+                "correct": 3,
+                "total": 10
+            },
+            "Mathematics -> Calculus -> Differential Calculus -> Related Rates": {
+                "accuracy": 1.0,
+                "correct": 1,
+                "total": 1
+            },
+            "Mathematics -> Geometry -> Plane Geometry -> Other (Chessboard problems) -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Prealgebra -> Absolute Values -> Other": {
+                "accuracy": 0.5,
+                "correct": 1,
+                "total": 2
+            },
+            "Mathematics -> Algebra -> Intermediate Algebra -> Decimal Operations -> Other": {
+                "accuracy": 1.0,
+                "correct": 1,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Intermediate Algebra -> Cubic Functions -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Prealgebra -> Arithmetic Sequences -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Intermediate Algebra -> Modular Arithmetic -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 2
+            },
+            "Mathematics -> Discrete Mathematics -> Set Theory": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Number Theory -> Divisor Functions -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 2
+            },
+            "Mathematics -> Algebra -> Intermediate Algebra -> Fraction Series -> Other": {
+                "accuracy": 1.0,
+                "correct": 1,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Functions and Sequences -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Intermediate Algebra -> Factorials -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Geometry -> Differential Geometry -> Curvature": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 3
+            },
+            "Mathematics -> Algebra -> Prealgebra -> Decimals": {
+                "accuracy": 0.5454545454545454,
+                "correct": 6,
+                "total": 11
+            },
+            "Mathematics -> Algebra -> Abstract Algebra -> Field Theory (due to the use of cubic plane curves and intricate properties of these algebraic structures) -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Sequences -> Other": {
+                "accuracy": 0.3333333333333333,
+                "correct": 1,
+                "total": 3
+            },
+            "Mathematics -> Algebra -> Binary Fractions -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Intermediate Algebra -> Expressions and Inequalities -> Other": {
+                "accuracy": 1.0,
+                "correct": 1,
+                "total": 1
+            },
+            "Mathematics -> Calculus -> Integral Calculus -> Techniques of Integration -> Series Expansion -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Polynomial Operations -> Other": {
+                "accuracy": 0.3333333333333333,
+                "correct": 1,
+                "total": 3
+            },
+            "Mathematics -> Number Theory -> Digit Sums -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Intermediate Algebra -> Rational Functions -> Other": {
+                "accuracy": 0.5,
+                "correct": 2,
+                "total": 4
+            },
+            "Mathematics -> Algebra -> Numbers -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Polynomials -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Calculus -> Differential Calculus -> Applications of Derivatives (finite differences and interpolation) -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Prealgebra -> Factorials -> Other": {
+                "accuracy": 0.5,
+                "correct": 1,
+                "total": 2
+            },
+            "Mathematics -> Calculus -> Applications of Derivatives (for optimization purposes) -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Number Theory -> Diophantine Equations -> Other": {
+                "accuracy": 0.5,
+                "correct": 2,
+                "total": 4
+            },
+            "Mathematics -> Algebra -> Differential Equations -> Ordinary Differential Equations (ODEs)": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 2
+            },
+            "Mathematics -> Calculus -> Series -> Other": {
+                "accuracy": 1.0,
+                "correct": 1,
+                "total": 1
+            },
+            "Mathematics -> Number Theory -> Digits and Sums -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Applied Mathematics -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Geometry -> Solid Geometry -> Other": {
+                "accuracy": 1.0,
+                "correct": 2,
+                "total": 2
+            },
+            "Mathematics -> Geometry -> Plane Geometry -> Areas -> Other": {
+                "accuracy": 1.0,
+                "correct": 2,
+                "total": 2
+            },
+            "Mathematics -> Geometry -> Plane Geometry -> Distances -> Other": {
+                "accuracy": 1.0,
+                "correct": 1,
+                "total": 1
+            },
+            "Mathematics -> Number Theory -> Divisor Function -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Linear Algebra -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Number Theory -> Base Representations -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 2
+            },
+            "Mathematics -> Algebra -> Intermediate Algebra -> Systems of Equations -> Other": {
+                "accuracy": 1.0,
+                "correct": 1,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Intermediate Algebra -> Other (counting integer solutions) -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Linear Algebra -> Linear Equations -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Calculus -> Applications of Integrals -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Intermediate Algebra -> Other (Inequalities and Eigenvalues Analysis) -> Other": {
+                "accuracy": 1.0,
+                "correct": 1,
+                "total": 1
+            },
+            "Mathematics -> Geometry -> Plane Geometry -> Conic Sections -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Geometry -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Linear Algebra -> Eigenvalues -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Number Theory -> Exponentiation -> Other": {
+                "accuracy": 1.0,
+                "correct": 1,
+                "total": 1
+            },
+            "Mathematics -> Geometry -> Solid Geometry -> Surface Area": {
+                "accuracy": 0.6,
+                "correct": 3,
+                "total": 5
+            },
+            "Mathematics -> Geometry -> Differential Geometry -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Recurrence Relations -> Other": {
+                "accuracy": 1.0,
+                "correct": 1,
+                "total": 1
+            },
+            "Mathematics -> Geometry -> Plane Geometry -> Distance Problems -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Applied Mathematics -> Statistics -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Intermediate Algebra -> Radical Equations -> Other": {
+                "accuracy": 1.0,
+                "correct": 1,
+                "total": 1
+            },
+            "Mathematics -> Number Theory -> Modular Arithmetic -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 2
+            },
+            "Mathematics -> Algebra -> Prealgebra -> Ratios -> Other": {
+                "accuracy": 0.5,
+                "correct": 1,
+                "total": 2
+            },
+            "Mathematics -> Geometry -> Plane Geometry -> Lines -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Sequences and series -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Prealgebra -> Exponents -> Other": {
+                "accuracy": 0.5,
+                "correct": 1,
+                "total": 2
+            },
+            "Mathematics -> Algebra -> Linear Algebra -> Determinants": {
+                "accuracy": 1.0,
+                "correct": 3,
+                "total": 3
+            },
+            "Mathematics -> Calculus -> Series and Sequences -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 2
+            },
+            "Mathematics -> Number Theory -> Integer Factorization -> Other": {
+                "accuracy": 1.0,
+                "correct": 1,
+                "total": 1
+            },
+            "Mathematics -> Geometry -> Plane Geometry -> Perimeter": {
+                "accuracy": 0.5,
+                "correct": 1,
+                "total": 2
+            },
+            "Mathematics -> Algebra -> Prealgebra -> Sequences -> Other": {
+                "accuracy": 0.25,
+                "correct": 1,
+                "total": 4
+            },
+            "Mathematics -> Algebra -> Prealgebra -> Arithmetic -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Prealgebra -> Equations -> Other": {
+                "accuracy": 1.0,
+                "correct": 2,
+                "total": 2
+            },
+            "Mathematics -> Geometry -> Plane Geometry -> Circular and Triangular Relationships -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Calculus -> Infinite Series -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Calculus -> Integral Calculus -> Techniques of Integration -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 2
+            },
+            "Mathematics -> Algebra -> Complex Numbers -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Floor Function -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Prealgebra -> Averages -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Number Theory -> Perfect Numbers (as the problem contextually involves understanding integer conditions and perfect squares indirectly) -> Other": {
+                "accuracy": 1.0,
+                "correct": 1,
+                "total": 1
+            },
+            "Mathematics -> Number Theory -> Binary Representation -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Calculus -> Differential Calculus -> Applications of Derivatives (for understanding the inverse tangent) -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Number Theory -> Other (for comparing transcendental numbers) -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Prealgebra -> Percentages -> Other": {
+                "accuracy": 0.2,
+                "correct": 1,
+                "total": 5
+            },
+            "Mathematics -> Algebra -> Prealgebra -> Ratios and Proportions -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Discrete Mathematics -> Game Theory": {
+                "accuracy": 0.5,
+                "correct": 2,
+                "total": 4
+            },
+            "Mathematics -> Number Theory -> Exponential Equations -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Calculus -> Real Numbers -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Geometry -> Plane Geometry -> Circle -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Intermediate Algebra -> Radical Expressions -> Other": {
+                "accuracy": 1.0,
+                "correct": 1,
+                "total": 1
+            },
+            "Mathematics -> Number Theory -> Prime Numbers (due to considerations involving perfect squares and integer properties) -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Number Theory -> Sequences -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Geometry -> Plane Geometry -> Coordinates -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Calculus -> Optimization -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Number Theory -> Rational Numbers -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 2
+            },
+            "Mathematics -> Other": {
+                "accuracy": 0.3333333333333333,
+                "correct": 1,
+                "total": 3
+            },
+            "Mathematics -> Algebra -> Functional Equations -> Other": {
+                "accuracy": 1.0,
+                "correct": 1,
+                "total": 1
+            },
+            "Mathematics -> Calculus -> Single-variable -> Other": {
+                "accuracy": 1.0,
+                "correct": 1,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Elementary Functions -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Number Theory -> Integer Solutions -> Other": {
+                "accuracy": 0.5,
+                "correct": 1,
+                "total": 2
+            },
+            "Mathematics -> Number Theory -> Prime Numbers (since factoring may be involved in recognizing perfect squares or constraints) -> Other": {
+                "accuracy": 1.0,
+                "correct": 1,
+                "total": 1
+            },
+            "Mathematics -> Number Theory -> Rational Approximations -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            },
+            "Mathematics -> Geometry -> Plane Geometry -> Segments -> Other": {
+                "accuracy": 1.0,
+                "correct": 1,
+                "total": 1
+            },
+            "Mathematics -> Geometry -> Plane Geometry -> Intersections -> Other": {
+                "accuracy": 1.0,
+                "correct": 1,
+                "total": 1
+            },
+            "Mathematics -> Algebra -> Quadratic Functions -> Other": {
+                "accuracy": 0.0,
+                "correct": 0,
+                "total": 1
+            }
+        }
+    },
+    "max_tokens": 20000,
+    "temperature": 0.6,
+    "top_p": 1.0,
+    "repetition_penalty": 1.0,
+    "use_chat_completions": true,
+    "timestamp": 1742350858.7157762
+}
+{
+    "dataset": "eval_output/processed_QwQ-32B_30000_True_aime25.jsonl",
+    "model": "/share/project/huggingface/models/Qwen2.5-32B-Instruct",
+    "results": {
+        "aime25": {
+            "accuracy": 0.286495103621043,
+            "correct": 2516,
+            "total": 8782
+        }
+    },
+    "max_tokens": 20000,
+    "temperature": 0.6,
+    "top_p": 1.0,
+    "repetition_penalty": 1.0,
+    "use_chat_completions": true,
+    "timestamp": 1742366888.1688628
+}
+{
+    "dataset": "aime25",
+    "model": "/share/project/huggingface/models/Qwen2.5-32B-Instruct",
+    "results": {
+        "aime25": {
+            "accuracy": 0.1,
+            "correct": 3,
+            "total": 30
+        }
+    },
+    "max_tokens": 20000,
+    "temperature": 0.6,
+    "top_p": 1.0,
+    "repetition_penalty": 1.0,
+    "use_chat_completions": true,
+    "timestamp": 1742372123.263274
 }

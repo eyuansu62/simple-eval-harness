@@ -1,6 +1,7 @@
 import json
 import jsonlines
 import os
+import random
 import re
 import time
 import argparse
@@ -28,30 +29,25 @@ PROMPT_TEMPLATES = {
 }
 
 HF_DATASETS = [
-    "KbsdJames/Omni-MATH",
 ]
 
 DATASET_EVALUATORS = {
-    "aime": AIMEEvaluator(),
-    "omni-math": OminiMathEvaluator(),
-    "ugphysics": UgPhysicsEvaluator()
+    "aime": AIMEEvaluator,
+    "omni-math": OminiMathEvaluator,
+    "ugphysics": UgPhysicsEvaluator
 }
 
-def get_evaluator(dataset_name):
+def get_evaluator(dataset_name, cache_name=None):
     """Get evaluator for dataset"""
+    cache_name = f"{cache_name}_evaluator"
     if dataset_name in DATASET_EVALUATORS:
-        return DATASET_EVALUATORS[dataset_name]
+        return DATASET_EVALUATORS[dataset_name](cache_name=cache_name)
     
     for name, evaluator in DATASET_EVALUATORS.items():
         if name in dataset_name or dataset_name in name:
-            return evaluator
+            return evaluator(cache_name=cache_name)
     
     raise ValueError(f"No evaluator found for dataset {dataset_name}")
-
-
-# def process_deepseek_prediction(prediction):
-#     match = re.search(r"</think>\n\n(.*)", prediction, re.DOTALL)
-#     return match.group(1) if match else prediction
 
 def process_deepseek_prediction(prediction):
     think_match = re.search(r"(.*?)</think>\n\n(.*)", prediction, re.DOTALL)
@@ -69,7 +65,7 @@ def process_deepseek_prediction(prediction):
         "full_response": prediction
     }
 
-def load_model_by_backend(args):
+def load_model_by_backend(args, output_filename):
 
     if args.backend == 'vllm':
         model_path = args.model_name
@@ -151,10 +147,13 @@ def load_model_by_backend(args):
 
         # Set up caching if requested
         if args.use_cache:
-            print(f"Using cache: {args.use_cache}")
-            model = CachingLM(model, args.use_cache)
+            # Create cache name
+            cache_name = f"{output_filename}_cache"
+            print(f"Using cache: {cache_name}")
+            model = CachingLM(model, cache_name)
 
         sampling_params = {
+            "do_sample": args.do_sample,
             "temperature": args.temperature,
             "top_p": args.top_p,
             "max_tokens": args.max_tokens,
@@ -197,61 +196,71 @@ def promptify(prompt, prompt_template, tokenizer, use_chat_completions=False, us
     return PROMPT_TEMPLATES[prompt_template].format(input=prompt)
     
 
-# def process_conversations(data, model_name, model_config, concurrency=2, use_cache=None):
-#     """Process all conversations with the model"""
-    
-#     max_turns = 2
-    
-#     # Initialize conversation states
-#     messages_list = [[] for _ in data]
-    
-#     prompt_list = [
-#         ""
-#     ]
-#     # Process each turn
-#     for turn_idx in range(max_turns):
-#         # Collect samples for this turn
-#         batch_indices = []
-#         batch_prompts = []
-        
-#         for i, sample in enumerate(data):
-#             problem = sample.get('problem', sample.get("question"))
-#             if turn_idx < max_turns:
-#                 # Add user message
-#                 messages_list[i].append({"role": "user", "content": turns[turn_idx]})
-#                 batch_indices.append(i)
-#                 batch_prompts.append((f"sample_{i}_turn_{turn_idx}", messages_list[i][:]))
-        
-#         # Generate responses
-#         if batch_prompts:
-#             print(f"Turn {turn_idx}: Processing {len(batch_prompts)} conversations")
-#             batch_predictions = model.generate_until(
-#                 batch_prompts, 
-#                 gen_kwargs={"max_gen_toks": 20000}
-#             )
-            
-#             # Add assistant responses
-#             for idx, prediction in zip(batch_indices, batch_predictions):
-                
-#                 messages_list[idx].append({"role": "assistant", "content": process_predictions(prediction)})
-    
-#     # Prepare results
-#     results = []
-#     for i, sample in enumerate(data):
-#         # Extract assistant responses
-#         predictions = [msg["content"] for msg in messages_list[i] if msg["role"] == "assistant"]
-#         results.append({**sample, 'prediction': predictions})
-    
-#     return results
+def process_conversations(data, model, sampling_params):
+    """Process all conversations with the model"""
+    KEYWORDS = [
+        "alternatively", "but wait", "let me reconsider", "on second thought",
+        "actually", "wait a minute", "hold on", "let's try another approach",
+        "thinking about it differently", "another way to look at this",
+        "let's reconsider", "let me think again"]
 
-def process_jsonl_file(dataset, args):
+    max_turns = 2
+    
+    # Initialize conversation states
+    messages_list = [[] for _ in data]
+    
+    # Process each turn
+    for turn_idx in range(max_turns):
+        # Collect samples for this turn
+        batch_indices = []
+        batch_prompts = []
+        
+        for i, sample in enumerate(data):
+            if turn_idx == 0:
+                # First turn: Use original question and add previous answer if available
+                problem = sample.get('input')
+                messages_list[i].append(eval(problem))
+                if 'prediction' in sample:
+                    messages_list[i].append({"role": "assistant", "content": str(sample['prediction'])})
+            elif turn_idx == 1:
+                # Second turn: Add a follow-up question using a keyword
+                keyword = random.choice(KEYWORDS)
+                messages_list[i].append({"role": "user", "content": keyword})
+            
+            batch_indices.append(i)
+            batch_prompts.append((f"sample_{i}_turn_{turn_idx}", messages_list[i][:]))
+        
+        # Generate responses
+        if batch_prompts:
+            print(f"Turn {turn_idx}: Processing {len(batch_prompts)} conversations")
+            batch_predictions = model.generate_until(
+                batch_prompts, 
+                gen_kwargs=sampling_params
+            )
+            
+            # Add assistant responses
+            for idx, prediction in zip(batch_indices, batch_predictions):
+                messages_list[idx].append({"role": "assistant", "content": process_predictions(prediction)})
+    
+    # Prepare results
+    results = []
+    for i, sample in enumerate(data):
+        breakpoint()
+        # Extract assistant responses
+        predictions = [msg["content"] for msg in messages_list[i] if msg["role"] == "assistant"]
+        results.append({**sample, 'prediction': predictions})
+    
+    return results
+
+def process_jsonl_file(dataset, args, output_filename):
     # Load model
-    llm, sampling_params = load_model_by_backend(args=args)
+    llm, sampling_params = load_model_by_backend(args=args, output_filename=output_filename)
 
     # Process prompts
     tokenizer = llm.get_tokenizer() if args.backend != "api" else None
     prompt_template = args.prompt_template if args.backend != "api" else None
-    prompts = [promptify(sample["question"], prompt_template, tokenizer, use_chat_completions=args.use_chat_completions, use_system_prompt=args.use_system_prompt) for sample in dataset]
+    problem_key = "input" if dataset[0].get("input") is not None else "question"
+    prompts = [promptify(sample[problem_key], prompt_template, tokenizer, use_chat_completions=args.use_chat_completions, use_system_prompt=args.use_system_prompt) for sample in dataset]
 
     if args.debug:
         prompts = prompts[:10]
@@ -272,6 +281,7 @@ def process_jsonl_file(dataset, args):
 
     processed_predictions = [process_deepseek_prediction(pred) for pred in predictions]
 
+    # breakpoint()
     processed_data = [{
         **sample, 
         "prediction": pred["answer"],
@@ -279,7 +289,10 @@ def process_jsonl_file(dataset, args):
         # "full_response": pred["full_response"],
         "input": str(processed_prompt)
     } for sample, pred, processed_prompt in zip(dataset, processed_predictions, prompts)]
-        
+    
+    if args.multi_turn:
+        processed_data = process_conversations(processed_data, llm, sampling_params)
+
     return processed_data
 
     
@@ -354,7 +367,7 @@ def load_task_dataset(task_name):
     return dataset
 
 
-def analyze_results(data, llm_as_judge=False, answer_key='answer'):
+def analyze_results(data, llm_as_judge=False, answer_key='answer', cache_name=None):
     """Analyze dataset-level results after individual sample evaluation"""
     # Group samples by task
     task_data = {}
@@ -368,7 +381,7 @@ def analyze_results(data, llm_as_judge=False, answer_key='answer'):
     processed_data = []
     
     for task, samples in task_data.items():
-        evaluator = get_evaluator(task)
+        evaluator = get_evaluator(task, cache_name)
         
         # Sample-level evaluation first
         evaluation_results = []
@@ -427,8 +440,9 @@ def get_output_path(args):
         ":": "colon",
         "-": "dash",
         "_": "underscore",
-        "\\n": "newline",
-        "\\t": "tab"
+        "\n": "newline",
+        "\t": "tab",
+        "\n\n": "double_newline"
     }
 
     # Extract model name without path
@@ -436,7 +450,7 @@ def get_output_path(args):
     
     # Build descriptive filename with parameters
     params = [
-        f"model_{model_short_name}",
+        f"{model_short_name}",
         f"temp_{args.temperature}",
         f"rep_{args.repetition_penalty}",
         f"chat_{args.use_chat_completions}"
@@ -445,10 +459,15 @@ def get_output_path(args):
     # Add debug dataset info if available
     if hasattr(args, 'load_debug_dataset') and args.load_debug_dataset:
         # Convert delimiter to string name if it exists in our mapping
-        delimiter_name = delimiter_names.get(args.delimiter.strip(), args.delimiter.strip())
+        delimiter_name = delimiter_names.get(args.delimiter, args.delimiter)
         params.append(f"debug_{args.load_debug_dataset.split('/')[-1].removesuffix('.jsonl')}_{delimiter_name}")
         
     
+    if args.llm_as_judge:
+        params.append("llm_as_judge")
+    
+    if args.multi_turn:
+        params.append("multi_turn")
     # Join with underscores for filename
     filename = "_".join(params) + ".jsonl"
     
@@ -456,12 +475,13 @@ def get_output_path(args):
 
 def main():
     parser = argparse.ArgumentParser(description="Process datasets with fast inference.")
-    parser.add_argument("--dataset", required=True, help="Name or path of the dataset to load.")
+    parser.add_argument("--dataset", required=False, help="Name or path of the dataset to load.")
     parser.add_argument("--split", default="test", help="Split to use (if dataset has multiple splits).")
     parser.add_argument("--model-name", required=True, help="Name of the model to use for inference.")
     parser.add_argument("--answer-key", default="answer", help="Key for the answer/ground truth in the dataset.")
     parser.add_argument("--debug", action="store_true", help="Enable debug mode.")
     parser.add_argument("--max-tokens", type=int, default=8192, help="Max tokens for generation (default: 8192)")
+    parser.add_argument("--do-sample", type=bool, default=True, help="Whether to use sampling (default: True)")
     parser.add_argument("--temperature", type=float, default=0.6, help="Temperature for sampling (default: 0.6)")
     parser.add_argument("--top-p", type=float, default=1.0, help="Top-p for nucleus sampling (default: 1.0)")
     parser.add_argument("--repetition-penalty", type=float, default=1.0, help="Repetition penalty for generation (default: 1.0)")
@@ -471,20 +491,20 @@ def main():
     parser.add_argument("--data-parallel-size", type=int, default=1, help="Data parallel size for sglang (default: 1)")
     parser.add_argument("--seed", type=int, default=42, help="Seed for random number generation (default: 42)")
     parser.add_argument("--batch-size", type=int, default=1024, help="Batch size for inference (default: 1024)")
-    parser.add_argument("--prompt-template", default="qwen25-math-cot", help="Key for prompt template.")
+    parser.add_argument("--prompt-template", default=None, help="Key for prompt template.")
     parser.add_argument("--backend", default="vllm", help="Backend to use for inference (default: vllm)")
     parser.add_argument("--use-cache", action="store_true", help="Whether to use cache for inference")
     parser.add_argument("--use-chat-completions", type=bool, default=True, help="Use chat completions mode for API models.")
-    parser.add_argument("--use-system-prompt", type=bool, default=True, help="Whether to use the system prompt.")
+    parser.add_argument("--use-system-prompt", type=bool, default=False, help="Whether to use the system prompt.")
     parser.add_argument("--llm-as-judge", action="store_true", default=False, help="Whether to use the LLM as judge.")
     parser.add_argument("--load-debug-dataset", type=str, help="Load the dataset for debugging")
-    parser.add_argument("--delimiter", type=str, default=". ")
+    parser.add_argument("--multi-turn", action="store_true", default=False, help="Whether to use multi-turn mode.")
+    parser.add_argument("--delimiter", type=str, default="\n\n")
 
     args = parser.parse_args()
 
     # Load dataset
     if args.load_debug_dataset:
-        print(f"[debug]: args.delimiter={args.delimiter}")
         with jsonlines.open(args.load_debug_dataset, 'r') as reader:
             data = list(reader)
             original_data = []
@@ -498,11 +518,21 @@ def main():
                 question = item['question']
 
                 content_message = query[0]['content'] + " "
-                for _id, sub_sentence in enumerate(thinking_content.split(args.delimiter)):
+                sample = {
+                        "id": id,
+                        "input": [{"role": "user", "content": query[0]['content']}],
+                        "question": question,
+                        "task_name": task_name,
+                        "answer": answer,
+                        "label": "original_question"
+                    }
+                original_data.append(sample)
+
+                for _id, sub_sentence in enumerate(thinking_content.split(args.delimiter)[:-1]):
                     content_message += sub_sentence + args.delimiter
                     sample = {
                         "id": id,
-                        "input": [{"role": "user", "content": content_message}],
+                        "input": [{"role": "user", "content": content_message.strip()}],
                         "question": question,
                         "task_name": task_name,
                         "answer": answer,
@@ -510,11 +540,11 @@ def main():
                     }
                     original_data.append(sample)
 
-                for _id, sub_sentence in enumerate(prediction_content.split(args.delimiter)):
+                for _id, sub_sentence in enumerate(prediction_content.split(args.delimiter)[:-1]):
                     content_message += sub_sentence + args.delimiter
                     sample = {
                         "id": id,
-                        "input": [{"role": "user", "content": content_message}],
+                        "input": [{"role": "user", "content": content_message.strip()}],
                         "question": question,
                         "task_name": task_name,
                         "answer": answer,
@@ -529,15 +559,16 @@ def main():
     output_path = get_output_path(args)
     print(f"output_path={output_path}")
     # Process data without converting to list
-    processed_data = process_jsonl_file(original_data, args)
+    processed_data = process_jsonl_file(original_data, args, output_path.stem)
 
 
     # Analyze results
-    eval_result, processed_data_with_metric = analyze_results(processed_data, args.llm_as_judge, args.answer_key)
+    eval_result, processed_data_with_metric = analyze_results(processed_data, args.llm_as_judge, args.answer_key, output_path.stem)
 
     if eval_result:
         # Print accuracy for each task to console
         for task_name, stats in eval_result.items():
+            # breakpoint()
             accuracy_str = f"Exact match accuracy for {task_name}: {stats['accuracy']:.2%} ({stats['correct']}/{stats['total']})"
             print(accuracy_str)
         

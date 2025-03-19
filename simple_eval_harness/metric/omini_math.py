@@ -1,10 +1,10 @@
 from .evaluator import DatasetEvaluator
 from simple_eval_harness.utils.llm_as_judge import OmniJudge
-from simple_eval_harness.template_api import TemplateAPI
+from simple_eval_harness.template_api import TemplateAPI, CachingLM
 from simple_eval_harness.utils.token_soup import get_token
 
 class OminiMathEvaluator(DatasetEvaluator):
-    def __init__(self, name="ominimath"):
+    def __init__(self, name="ominimath", cache_name=None):
         super().__init__(name)
 
         self.judge_helper = OmniJudge()
@@ -24,7 +24,8 @@ class OminiMathEvaluator(DatasetEvaluator):
             base_url=model_config["base_url"],
             num_concurrent=1,
         )
-
+        self.judge_llm = CachingLM(self.judge_llm, cache_name)
+        
     def evaluate_by_judge(self, predictions, answers, questions=None):
         prompts = []
         for prediction, answer, question in zip(predictions, answers, questions):
@@ -58,17 +59,15 @@ class OminiMathEvaluator(DatasetEvaluator):
         
         # Calculate statistics for each domain
         task_stats = {
-            self.name: {
-                'accuracy': overall_correct / overall_total,
-                'correct': overall_correct,
-                'total': overall_total
-                **{
-                    domain: {
-                        'accuracy': results['correct'] / results['total'],
-                        'correct': results['correct'],
-                        'total': results['total']
-                    } for domain, results in domain_results.items()
-                }
+            'accuracy': overall_correct / overall_total,
+            'correct': overall_correct,
+            'total': overall_total,
+            **{
+                domain: {
+                    'accuracy': results['correct'] / results['total'],
+                    'correct': results['correct'],
+                    'total': results['total']
+                } for domain, results in domain_results.items()
             }
         }
         

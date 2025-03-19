@@ -25,6 +25,8 @@ def calculate_accuracy(data):
     
     Returns:
         overall_accuracy: The fraction of correct answers
+        first_attempt_accuracy: The fraction of correct first attempts
+        final_attempt_accuracy: The fraction of correct final attempts
         problem_stats: Dictionary with statistics per problem ID
     """
     correct_count = 0
@@ -45,18 +47,35 @@ def calculate_accuracy(data):
     # Create mapping from question to numeric ID based on order of appearance
     question_to_id = {q: i for i, q in enumerate(unique_questions)}
     
-    # Group problems by numeric ID
+    # Group problems by numeric ID and track attempts
     problems = defaultdict(list)
+    first_attempts_correct = 0
+    total_problems = 0
+    seen_problems = set()
+    last_attempts = {}
+    
     for item in data:
+        # breakpoint()
         if item.get('id'):
             original_id = item.get('id')
         else:
             original_id = item.get('question')
         numeric_id = question_to_id[original_id]
         problems[numeric_id].append(item)
+        
+        # Track first attempt accuracy
+        if numeric_id not in seen_problems:
+            seen_problems.add(numeric_id)
+            total_problems += 1
+            print(f"first attempt: id={numeric_id}, correct={item.get('correct')}")
+            if item.get('correct'):
+                first_attempts_correct += 1
+        
+        # Always update last attempt for this problem
+        last_attempts[numeric_id] = item.get('correct')
     
-    # breakpoint()
-
+    for _id, attempt in last_attempts.items():
+        print(f"last attempt: id={_id}, correct={attempt}")
     # Calculate statistics for each problem
     problem_stats = {}
     for numeric_id, instances in problems.items():
@@ -65,7 +84,8 @@ def calculate_accuracy(data):
         
         for instance in instances:
             is_correct = instance.get('correct')
-            correct_labels.append(int(is_correct))  # 添加标签
+            correct_labels.append(int(is_correct))
+            # breakpoint()
             if is_correct:
                 problem_correct += 1
                 correct_count += 1
@@ -76,15 +96,20 @@ def calculate_accuracy(data):
             'total': len(instances),
             'correct': problem_correct,
             'accuracy': accuracy,
-            'correct_labels': correct_labels  # 添加正确标签列表
+            'correct_labels': correct_labels
         }
     
     overall_accuracy = correct_count / total_count if total_count > 0 else 0
+    first_attempt_accuracy = first_attempts_correct / total_problems if total_problems > 0 else 0
     
-    return overall_accuracy, problem_stats
+    # Calculate final attempt accuracy
+    final_attempts_correct = sum(1 for is_correct in last_attempts.values() if is_correct)
+    final_attempt_accuracy = final_attempts_correct / total_problems if total_problems > 0 else 0
+    
+    return overall_accuracy, first_attempt_accuracy, final_attempt_accuracy, problem_stats
 
 
-def generate_report(overall_accuracy, problem_stats):
+def generate_report(overall_accuracy, first_attempt_accuracy, final_attempt_accuracy, problem_stats):
     """
     Generate a human-readable report of the accuracy analysis with visualization
     """
@@ -93,6 +118,8 @@ def generate_report(overall_accuracy, problem_stats):
     report.append("ACCURACY ANALYSIS REPORT")
     report.append("=" * 50)
     report.append(f"Overall Accuracy: {overall_accuracy:.2%}")
+    report.append(f"First Attempt Accuracy: {first_attempt_accuracy:.2%}")
+    report.append(f"Final Attempt Accuracy: {final_attempt_accuracy:.2%}")
 
     sorted_problems = sorted(
         problem_stats.items(), 
@@ -121,17 +148,17 @@ def main(file_path):
 
     # Calculate accuracy
     print("Calculating accuracy...")
-    overall_accuracy, problem_stats = calculate_accuracy(data)
+    overall_accuracy, first_attempt_accuracy, final_attempt_accuracy, problem_stats = calculate_accuracy(data)
     
     # Generate report
-    report = generate_report(overall_accuracy, problem_stats)
+    report = generate_report(overall_accuracy, first_attempt_accuracy, final_attempt_accuracy, problem_stats)
     print("\n" + report)
     
     # Optional: Save report to file
     with open("accuracy_report.txt", "w") as f:
         f.write(report)
     
-    return overall_accuracy, problem_stats
+    return overall_accuracy, first_attempt_accuracy, final_attempt_accuracy, problem_stats
 
 if __name__ == "__main__":
     import sys

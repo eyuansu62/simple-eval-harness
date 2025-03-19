@@ -14,6 +14,7 @@ dependencies = [
     "datasets",
     "sqlitedict",
     "tenacity",
+    "python-Levenshtein",
 ]
 requires-python = ">=3.10"
 

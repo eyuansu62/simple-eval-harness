@@ -35,5 +35,5 @@ def load_tokens_from_file(tokens_file: str):
 
 # Example usage:
 # Load tokens from a JSON file
-parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+parent_dir = os.path.dirname(os.path.abspath(__file__))
 load_tokens_from_file(f'{parent_dir}/API_tokens.json')

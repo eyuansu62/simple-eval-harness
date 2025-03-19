@@ -45,8 +45,9 @@ def remove_boxed(s: str) -> str:
 
 class DatasetEvaluator:
     """Base class defining common interface"""
-    def __init__(self, name):
+    def __init__(self, name, cache_name=None):
         self.name = name
+        self.cache_name = cache_name
         
     def evaluate(self, prediction, answer):
         """Evaluate single prediction"""

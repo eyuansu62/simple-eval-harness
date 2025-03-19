@@ -1,0 +1,1 @@
+from critic_prompt import prompt as critic_prompt
